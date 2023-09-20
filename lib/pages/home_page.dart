@@ -22,9 +22,18 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Peso'),
-                Text('Altura'),
-                Text('IMC'),
+                Text(
+                  'Peso',
+                  style: TextStyle(fontSize: 25),
+                ),
+                Text(
+                  'Altura',
+                  style: TextStyle(fontSize: 25),
+                ),
+                Text(
+                  'IMC',
+                  style: TextStyle(fontSize: 25),
+                ),
               ],
             ),
           ],
