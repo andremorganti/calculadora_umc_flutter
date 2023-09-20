@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class Pessoa {
+class Person {
 //attributes of person to calculate the IMC
   final String _id = UniqueKey().toString();
   String _name = "";
@@ -11,7 +11,7 @@ class Pessoa {
   double _imc = 0.0;
 
 //constructor
-  Pessoa(this._name);
+  Person(this._name);
 
 //gets and setters
   String get id => _id;
