@@ -36,11 +36,14 @@ class Person {
 
   double get imc => _imc;
 
-  void calculateIMC() {
-    if (_height <= 0.0 || _weight <= 0.0) {
+  set imc(double imc) {
+    _imc = imc;
+  }
+
+  double calculateIMC(double weight, double height) {
+    if (height <= 0.0 || weight <= 0.0) {
       throw ArgumentError("O valor não pode ser menor ou igual a 0");
     }
-    _imc = _weight / pow(_height / 100, 2);
-    return;
+    return weight / pow(height / 100, 2);
   }
 }
