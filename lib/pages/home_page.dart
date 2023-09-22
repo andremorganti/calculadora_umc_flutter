@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: ListBody(
                       children: <Widget>[
                         const Text(
-                          "Peso",
+                          "Peso (kg)",
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           controller: weightController,
                         ),
                         const Text(
-                          "Altura",
+                          "Altura (cm)",
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
