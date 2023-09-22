@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:calculadora_umc_flutter/models/person.dart';
 import 'package:calculadora_umc_flutter/repositories/person_repository.dart';
 import 'package:flutter/material.dart';
@@ -126,13 +129,23 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        alignment: AlignmentDirectional.center,
         child: ListView.builder(
             itemCount: _people.length,
             itemBuilder: (BuildContext bc, int index) {
               var itemIMC = _people[index];
-              return ListTile(
-                title: Text(
-                    "${itemIMC.weight.toString()} - ${itemIMC.weight.toString()} - ${itemIMC.imc.toString()}"),
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    itemIMC.weight.toString(),
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  Text(itemIMC.height.toString(),
+                      style: const TextStyle(fontSize: 20)),
+                  Text(itemIMC.imc.toString(),
+                      style: const TextStyle(fontSize: 20))
+                ],
               );
             }),
       ),
