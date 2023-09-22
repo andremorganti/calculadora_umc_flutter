@@ -45,30 +45,6 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Calculadora de IMC'),
       ),
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: const Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Peso',
-                  style: TextStyle(fontSize: 25),
-                ),
-                Text(
-                  'Altura',
-                  style: TextStyle(fontSize: 25),
-                ),
-                Text(
-                  'IMC',
-                  style: TextStyle(fontSize: 25),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           nameController.text = "";
@@ -148,6 +124,18 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Calcular',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: ListView.builder(
+            itemCount: _people.length,
+            itemBuilder: (BuildContext bc, int index) {
+              var itemIMC = _people[index];
+              return ListTile(
+                title: Text(
+                    "${itemIMC.weight.toString()} - ${itemIMC.weight.toString()} - ${itemIMC.imc.toString()}"),
+              );
+            }),
+      ),
     );
   }
 }
