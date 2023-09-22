@@ -11,12 +11,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var personRepository = PersonRepository();
-  var _people = const <Person>[];
+  var _people = <Person>[];
   var nameController = TextEditingController();
   var weightController = TextEditingController();
   var heightController = TextEditingController();
   var valueIMC = 0.0;
-  Person person = Person("");
+  var _valueIMC = 0.0;
+  Person person = Person("", 0, 0, 0);
 
   @override
   void initState() {
@@ -29,6 +30,12 @@ class _MyHomePageState extends State<MyHomePage> {
     _people = await personRepository.list();
 
     setState(() {});
+  }
+
+  void addPeopleToRepository(
+      String name, double weight, double height, double imc) {
+    Person newPerson = Person(name, weight, height, imc);
+    _people.add(newPerson);
   }
 
   @override
@@ -68,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
           weightController.text = "";
           heightController.text = "";
           valueIMC = 0.0;
+          _valueIMC = valueIMC;
           showDialog(
               context: context,
               builder: (BuildContext bc) {
@@ -104,34 +112,32 @@ class _MyHomePageState extends State<MyHomePage> {
                             backgroundColor: Colors.green,
                           ),
                           onPressed: () {
-                            if (weightController.text.isNotEmpty &&
-                                heightController.text.isNotEmpty) {
-                              valueIMC = person.calculateIMC(
-                                  double.parse(weightController.text),
-                                  double.parse(heightController.text));
-                            }
-                            print("IMC: $valueIMC");
-                            setState(() {});
+                            setState(() {
+                              if (weightController.text.isNotEmpty &&
+                                  heightController.text.isNotEmpty) {
+                                valueIMC = person.calculateIMC(
+                                    double.parse(weightController.text),
+                                    double.parse(heightController.text));
+                                _valueIMC = valueIMC;
+                                addPeopleToRepository(
+                                    "",
+                                    double.parse(weightController.text),
+                                    double.parse(heightController.text),
+                                    valueIMC);
+                                setState(() {
+                                  getPeople();
+                                });
+                                Navigator.pop(context);
+                              }
+                              print("IMC: $valueIMC");
+                              print("_people: ${_people}");
+                            });
                           },
                           child: const Text("Calcular",
                               style: TextStyle(color: Colors.white)),
                         ),
                         const SizedBox(
                           height: 10,
-                        ),
-                        const Text(
-                          "IMC",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 12, 67, 161)),
-                        ),
-                        Text(
-                          valueIMC.toString(),
-                          style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 12, 67, 161)),
                         ),
                       ],
                     ),

@@ -11,7 +11,7 @@ class Person {
   double _imc = 0.0;
 
 //constructor
-  Person(this._name);
+  Person(this._name, this._weight, this._height, this._imc);
 
 //gets and setters
   String get id => _id;
