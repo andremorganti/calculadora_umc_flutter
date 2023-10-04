@@ -50,9 +50,15 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            nameController.text = "";
+            if (nameController.text.isEmpty) {
+              nameController.text = "";
+            }
+
             weightController.text = "";
-            heightController.text = "";
+
+            if (heightController.text.isEmpty) {
+              heightController.text = "";
+            }
             valueIMC = 0.0;
             _valueIMC = valueIMC;
             showDialog(
@@ -64,14 +70,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ListBody(
                         children: <Widget>[
                           const Text(
-                            "Peso (kg)",
+                            "Nome",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromARGB(255, 12, 67, 161)),
                           ),
                           TextField(
-                            controller: weightController,
+                            controller: nameController,
                           ),
                           const Text(
                             "Altura (cm)",
@@ -82,6 +88,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           TextField(
                             controller: heightController,
+                          ),
+                          const Text(
+                            "Peso (kg)",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 12, 67, 161)),
+                          ),
+                          TextField(
+                            controller: weightController,
                           ),
                           const SizedBox(
                             height: 10,
@@ -99,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       double.parse(heightController.text));
                                   _valueIMC = valueIMC;
                                   addPeopleToRepository(
-                                      "",
+                                      nameController.text,
                                       double.parse(weightController.text),
                                       double.parse(heightController.text),
                                       valueIMC);
@@ -131,8 +147,8 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Text('Nome',
+              padding: const EdgeInsets.all(16.0),
+              child: Text("Nome: ${nameController.text}",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             ),
             Expanded(
