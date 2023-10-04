@@ -44,111 +44,118 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Calculadora de IMC'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          nameController.text = "";
-          weightController.text = "";
-          heightController.text = "";
-          valueIMC = 0.0;
-          _valueIMC = valueIMC;
-          showDialog(
-              context: context,
-              builder: (BuildContext bc) {
-                return AlertDialog(
-                  title: const Text("Novo IMC"),
-                  content: SingleChildScrollView(
-                    child: ListBody(
-                      children: <Widget>[
-                        const Text(
-                          "Peso (kg)",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 12, 67, 161)),
-                        ),
-                        TextField(
-                          controller: weightController,
-                        ),
-                        const Text(
-                          "Altura (cm)",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromARGB(255, 12, 67, 161)),
-                        ),
-                        TextField(
-                          controller: heightController,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.green,
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text('Calculadora de IMC'),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            nameController.text = "";
+            weightController.text = "";
+            heightController.text = "";
+            valueIMC = 0.0;
+            _valueIMC = valueIMC;
+            showDialog(
+                context: context,
+                builder: (BuildContext bc) {
+                  return AlertDialog(
+                    title: const Text("Novo IMC"),
+                    content: SingleChildScrollView(
+                      child: ListBody(
+                        children: <Widget>[
+                          const Text(
+                            "Peso (kg)",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 12, 67, 161)),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              if (weightController.text.isNotEmpty &&
-                                  heightController.text.isNotEmpty) {
-                                valueIMC = person.calculateIMC(
-                                    double.parse(weightController.text),
-                                    double.parse(heightController.text));
-                                _valueIMC = valueIMC;
-                                addPeopleToRepository(
-                                    "",
-                                    double.parse(weightController.text),
-                                    double.parse(heightController.text),
-                                    valueIMC);
-                                setState(() {
-                                  getPeople();
-                                });
-                                Navigator.pop(context);
-                              }
-                              print("IMC: $valueIMC");
-                              print("_people: ${_people}");
-                            });
-                          },
-                          child: const Text("Calcular",
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
+                          TextField(
+                            controller: weightController,
+                          ),
+                          const Text(
+                            "Altura (cm)",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Color.fromARGB(255, 12, 67, 161)),
+                          ),
+                          TextField(
+                            controller: heightController,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: Colors.green,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                if (weightController.text.isNotEmpty &&
+                                    heightController.text.isNotEmpty) {
+                                  valueIMC = person.calculateIMC(
+                                      double.parse(weightController.text),
+                                      double.parse(heightController.text));
+                                  _valueIMC = valueIMC;
+                                  addPeopleToRepository(
+                                      "",
+                                      double.parse(weightController.text),
+                                      double.parse(heightController.text),
+                                      valueIMC);
+                                  setState(() {
+                                    getPeople();
+                                  });
+                                  Navigator.pop(context);
+                                }
+                                print("IMC: $valueIMC");
+                                print("_people: ${_people}");
+                              });
+                            },
+                            child: const Text("Calcular",
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              });
-        },
-        tooltip: 'Calcular',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-      body: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        alignment: AlignmentDirectional.center,
-        child: ListView.builder(
-            itemCount: _people.length,
-            itemBuilder: (BuildContext bc, int index) {
-              var itemIMC = _people[index];
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    itemIMC.weight.toString(),
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  Text(itemIMC.height.toString(),
-                      style: const TextStyle(fontSize: 20)),
-                  Text(itemIMC.imc.toString(),
-                      style: const TextStyle(fontSize: 20))
-                ],
-              );
-            }),
-      ),
-    );
+                  );
+                });
+          },
+          tooltip: 'Calcular',
+          child: const Icon(Icons.add),
+        ), // This trailing comma makes auto-formatting nicer for build methods.
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text('Nome',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: _people.length,
+                  itemBuilder: (BuildContext bc, int index) {
+                    var itemIMC = _people[index];
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          itemIMC.weight.toString(),
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        Text(itemIMC.height.toString(),
+                            style: const TextStyle(fontSize: 20)),
+                        Text(itemIMC.imc.toString(),
+                            style: const TextStyle(fontSize: 20))
+                      ],
+                    );
+                  }),
+            ),
+          ],
+        ));
   }
 }
