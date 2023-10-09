@@ -30,8 +30,6 @@ environment:
 dependencies:
   hive: ^2.2.3
   path_provider: ^2.1.1
-  http: ^0.13.3
-  web_socket_channel: ^2.2.0
   flutter:
     sdk: flutter
 
@@ -41,6 +39,8 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  hive_generator: ^1.1.3
+  build_runner: ^2.2.1
   flutter_test:
     sdk: flutter
 
