@@ -1,9 +1,11 @@
 import 'dart:math';
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:calculadora_umc_flutter/models/person.dart';
 import 'package:calculadora_umc_flutter/repositories/person_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -21,15 +23,24 @@ class _MyHomePageState extends State<MyHomePage> {
   var valueIMC = 0.0;
   var _valueIMC = 0.0;
   Person person = Person("", 0, 0, 0);
+  late Box boxNameHeight;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getPeople();
+
+    getData();
   }
 
-  void getPeople() async {
+  void getData() async {
+    if (Hive.isBoxOpen('person_imc_data')) {
+      boxNameHeight = Hive.box('person_imc_data');
+    } else {
+      boxNameHeight = await Hive.openBox('person_imc_data');
+    }
+    nameController.text = boxNameHeight.get('name').toString() ?? "";
+    heightController.text = boxNameHeight.get('height').toString() ?? "0";
     _people = await personRepository.list();
 
     setState(() {});
@@ -119,8 +130,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                       double.parse(weightController.text),
                                       double.parse(heightController.text),
                                       valueIMC);
+                                  boxNameHeight.put(
+                                      "name", nameController.text);
+                                  boxNameHeight.put("height",
+                                      double.parse(heightController.text));
                                   setState(() {
-                                    getPeople();
+                                    getData();
                                   });
                                   Navigator.pop(context);
                                 }
